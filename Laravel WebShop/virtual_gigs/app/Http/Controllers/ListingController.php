@@ -38,6 +38,10 @@ class ListingController extends Controller
             'description' => 'required'
         ]);
 
+        if ($request->hasFile('logo')) {
+            $formFields['logo'] = $request->file('logo')->store('logos', 'public');
+        }
+
         Listing::create($formFields);
 
         // Session::flash('message', 'Listing imported')
@@ -49,5 +53,35 @@ class ListingController extends Controller
     public function create()
     {
         return view('listings.create');
+    }
+
+    //show edit form
+    public function edit(Listing $listing)
+    {
+        return view('listings.edit', ['listing' => $listing]);
+    }
+
+    //update listing
+    public function update(Request $request, Listing $listing)
+    {
+        $formFields = $request->validate([
+            'title' => 'required',
+            'company' => ['required'],
+            'location' => 'required',
+            'email' => ['required', 'email'],
+            'tags' => 'required',
+            'website' => 'required',
+            'description' => 'required'
+        ]);
+
+        if ($request->hasFile('logo')) {
+            $formFields['logo'] = $request->file('logo')->store('logos', 'public');
+        }
+
+        $listing->update($formFields);
+
+        // Session::flash('message', 'Listing imported')
+
+        return back()->with('message', 'Listing updated successfully!');
     }
 }

@@ -28,6 +28,13 @@ Route::post('/listings', [ListingController::class, 'store']);
 //Single Listing
 Route::get('/listings/{listing}', [ListingController::class, 'show']);
 
+//Update listing
+Route::put('/listings/{listing}', [ListingController::class, 'update']);
+
+//Show edit form 
+Route::get('/listings/{listing}/edit', [ListingController::class, 'edit']);
+
+
 
 // Route::get('/hello', function () {
 //     return response('<h1> Hello world </h1>', 200)
