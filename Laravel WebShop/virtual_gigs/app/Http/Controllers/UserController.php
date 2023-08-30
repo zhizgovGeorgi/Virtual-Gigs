@@ -35,4 +35,15 @@ class UserController extends Controller
 
         return redirect('/')->with('message', 'Successful registration!');
     }
+
+    //logout user
+    public function logout(Request $request)
+    {
+        auth()->logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/')->with('message', 'You have already logout');
+    }
 }
